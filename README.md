@@ -1,8 +1,8 @@
-# ATT&CKFlow
+# ATT&CKTrace
 
 **MITRE ATT&CK–Based Detection & Attack Chain Analysis Tool**
 
-ATT&CKFlow is a prototype detection analysis engine that processes endpoint log data, maps activity to MITRE ATT&CK techniques, and reconstructs attack chains through process lineage and timeline correlation. The tool is designed to simulate how detection engineering platforms turn raw telemetry into structured threat intelligence.
+ATT&CKTrace is a prototype detection analysis engine that processes endpoint log data, maps activity to MITRE ATT&CK techniques, and reconstructs attack chains through process lineage and timeline correlation. The tool is designed to simulate how detection engineering platforms turn raw telemetry into structured threat intelligence.
 
 This project focuses on **detection logic, behavior correlation, and attack reconstruction**, rather than simple alert matching.
 
@@ -53,7 +53,7 @@ Outputs a JSON report containing detailed detection metadata, making the tool su
 
 ## Example Output
 
-ATT&CKFlow produces investigation-style summaries such as:
+ATT&CKTrace produces investigation-style summaries such as:
 
 ```
 === ATTACK TIMELINE | HOST: WS-01 ===
@@ -66,7 +66,7 @@ ATT&CKFlow produces investigation-style summaries such as:
 
 ## Architecture Overview
 
-ATT&CKFlow is structured in four logical layers:
+ATT&CKTrace is structured in four logical layers:
 
 1. **Normalization Layer** – Converts raw logs into a consistent schema
 2. **Detection Layer** – Applies behavior-based logic and MITRE mapping
@@ -113,7 +113,7 @@ Logs are normalized internally, allowing consistent detection and correlation.
 
 ## Project Scope
 
-ATT&CKFlow is a **detection engineering prototype**, not a production security platform. It demonstrates:
+ATT&CKTrace is a **detection engineering prototype**, not a production security platform. It demonstrates:
 
 * Threat-informed detection design
 * MITRE ATT&CK integration
@@ -148,3 +148,4 @@ ATT&CKFlow is a **detection engineering prototype**, not a production security p
 smartytinker
 
 Detection Engineering and Threat Analysis Enthusiast
+
