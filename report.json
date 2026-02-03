@@ -1,0 +1,31 @@
+[
+    {
+        "technique_id": "T1059.003",
+        "technique_name": "Windows Command Shell",
+        "tactic": "Execution",
+        "confidence": 1,
+        "severity": "LOW",
+        "matched_indicators": [
+            "cmd.exe"
+        ],
+        "possible_false_positives": [
+            "Administrative batch scripts",
+            "Software installers"
+        ]
+    },
+    {
+        "technique_id": "T1003",
+        "technique_name": "OS Credential Dumping",
+        "tactic": "Credential Access",
+        "confidence": 4,
+        "severity": "MEDIUM",
+        "matched_indicators": [
+            "lsass",
+            "LSASS access behavior"
+        ],
+        "possible_false_positives": [
+            "Security tools accessing LSASS for monitoring",
+            "Authorized forensic investigations"
+        ]
+    }
+]

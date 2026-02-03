@@ -1,0 +1,265 @@
+[
+  
+  {
+    "technique_id": "T1059.001",
+    "name": "Command and Scripting Interpreter: PowerShell",
+    "tactic": "Execution",
+    "keywords": ["powershell", "-enc", "invoke-expression", "iex", "downloadstring"],
+    "detection": [
+      "Alert on encoded PowerShell commands",
+      "Monitor Office applications spawning PowerShell",
+      "Detect suspicious PowerShell network connections"
+    ],
+    "false_positives": [
+      "Administrative PowerShell automation",
+      "Legitimate software deployment scripts"
+    ]
+    },
+{
+  "technique_id": "T1059.003",
+  "name": "Windows Command Shell",
+  "tactic": "Execution",
+  "keywords": ["cmd.exe", "/c", "/k"],
+  "detection": [
+    "Monitor suspicious cmd.exe command chains",
+    "Alert on cmd.exe spawned from Office or scripting engines"
+  ],
+  "false_positives": [
+    "Administrative batch scripts",
+    "Software installers"
+  ]
+},
+{
+  "technique_id": "T1059.005",
+  "name": "Visual Basic",
+  "tactic": "Execution",
+  "keywords": ["wscript", "cscript", ".vbs"],
+  "detection": [
+    "Detect VBScript execution from temporary directories",
+    "Monitor script hosts spawning system utilities"
+  ],
+  "false_positives": [
+    "Legacy admin scripts",
+    "Enterprise login scripts"
+  ]
+}
+,
+  {
+    "technique_id": "T1204",
+    "name": "User Execution",
+    "tactic": "Execution",
+    "keywords": ["winword.exe", "excel.exe", "outlook.exe", "acrord32.exe"],
+    "detection": [
+      "Alert when Office apps spawn script interpreters",
+      "Monitor suspicious child processes of document readers"
+    ],
+    "false_positives": [
+      "Users opening legitimate Office macros",
+      "Trusted internal document automation"
+    ]
+  },
+  {
+    "technique_id": "T1003",
+    "name": "OS Credential Dumping",
+    "tactic": "Credential Access",
+    "keywords": ["lsass", "mimikatz", "procdump", "sekurlsa"],
+    "detection": [
+      "Alert on access to LSASS process memory",
+      "Detect credential dumping tool execution"
+    ],
+    "false_positives": [
+      "Security tools accessing LSASS for monitoring",
+      "Authorized forensic investigations"
+    ]
+  },
+  {
+    "technique_id": "T1047",
+    "name": "Windows Management Instrumentation",
+    "tactic": "Execution",
+    "keywords": ["wmic", "wmiprvse", "process call create"],
+    "detection": [
+      "Monitor remote WMI process creation",
+      "Alert on suspicious WMIC command usage"
+    ],
+    "false_positives": [
+      "Legitimate system administration scripts",
+      "Software installers using system binaries"
+    ]
+  },
+  {
+    "technique_id": "T1547",
+    "name": "Boot or Logon Autostart Execution",
+    "tactic": "Persistence",
+    "keywords": ["run key", "startup folder", "registry run", "schtasks"],
+    "detection": [
+      "Monitor registry Run key modifications",
+      "Detect suspicious scheduled task creation"
+    ],
+    "false_positives": [
+      "Legitimate software auto-start entries",
+      "Authorized IT task scheduling"
+    ]
+  },
+  {
+    "technique_id": "T1055",
+    "name": "Process Injection",
+    "tactic": "Defense Evasion",
+    "keywords": ["virtualalloc", "createremotethread", "process injection"],
+    "detection": [
+      "Monitor memory injection behavior",
+      "Alert on suspicious remote thread creation"
+    ],
+    "false_positives": [
+      "Security software injecting into processes for monitoring",
+      "Legitimate accessibility or assistive tools"
+    ]
+  },
+  {
+    "technique_id": "T1218",
+    "name": "Signed Binary Proxy Execution",
+    "tactic": "Defense Evasion",
+    "keywords": ["rundll32", "mshta", "regsvr32", "certutil"],
+    "detection": [
+      "Alert on unusual LOLBin command-line usage",
+      "Monitor system binaries executing remote content"
+    ],
+    "false_positives": [
+      "Legitimate system administration scripts",
+      "Software installers using system binaries"
+    ]
+  },
+{
+  "technique_id": "T1555",
+  "name": "Credentials from Password Stores",
+  "tactic": "Credential Access",
+  "keywords": ["browserpass", "vaultcmd", "cmdkey"],
+  "detection": [
+    "Monitor access to browser credential stores",
+    "Detect dumping of stored credentials"
+  ],
+  "false_positives": [
+    "Password managers",
+    "Legitimate credential backup tools"
+  ]
+}
+,
+  {
+    "technique_id": "T1027",
+    "name": "Obfuscated Files or Information",
+    "tactic": "Defense Evasion",
+    "keywords": ["base64", "encode", "certutil -decode"],
+    "detection": [
+      "Detect encoded or obfuscated command-line usage",
+      "Alert on certutil decoding operations"
+    ],
+    "false_positives": [
+      "Encoded configuration files",
+      "Legitimate certificate management operations"
+    ]
+  },
+{
+  "technique_id": "T1562",
+  "name": "Impair Defenses",
+  "tactic": "Defense Evasion",
+  "keywords": ["disabledefender", "set-mppreference", "netsh advfirewall set"],
+  "detection": [
+    "Alert on security tool tampering",
+    "Monitor commands that disable AV or firewall"
+  ],
+  "false_positives": [
+    "Authorized troubleshooting",
+    "Security team testing"
+  ]
+},
+{
+  "technique_id": "T1070",
+  "name": "Indicator Removal on Host",
+  "tactic": "Defense Evasion",
+  "keywords": ["wevtutil cl", "clear-eventlog", "del *.log"],
+  "detection": [
+    "Detect clearing of Windows event logs",
+    "Monitor mass log deletion behavior"
+  ],
+  "false_positives": [
+    "Log rotation scripts",
+    "Admin cleanup operations"
+  ]
+},
+
+  {
+    "technique_id": "T1105",
+    "name": "Ingress Tool Transfer",
+    "tactic": "Command and Control",
+    "keywords": ["curl", "wget", "bitsadmin", "downloadfile"],
+    "detection": [
+      "Monitor suspicious file downloads via command line",
+      "Detect unusual outbound file transfer activity"
+    ],
+    "false_positives": [
+      "Software updates downloading components",
+      "Legitimate administrative file transfers"
+    ]
+  }
+  ,
+{
+  "technique_id": "T1082",
+  "name": "System Information Discovery",
+  "tactic": "Discovery",
+  "keywords": ["systeminfo", "hostname", "whoami"],
+  "detection": [
+    "Detect suspicious system enumeration commands",
+    "Monitor recon commands from unusual processes"
+  ],
+  "false_positives": [
+    "IT inventory scripts",
+    "Admin troubleshooting"
+  ]
+},
+{
+  "technique_id": "T1016",
+  "name": "System Network Configuration Discovery",
+  "tactic": "Discovery",
+  "keywords": ["ipconfig", "route print", "netstat"],
+  "detection": [
+    "Monitor network enumeration activity",
+    "Detect recon commands executed in sequence"
+  ],
+  "false_positives": [
+    "Helpdesk troubleshooting",
+    "Network diagnostics"
+  ]
+}
+,
+{
+  "technique_id": "T1021",
+  "name": "Remote Services",
+  "tactic": "Lateral Movement",
+  "keywords": ["psexec", "wmic /node", "mstsc"],
+  "detection": [
+    "Monitor remote execution tools usage",
+    "Alert on lateral movement via admin tools"
+  ],
+  "false_positives": [
+    "IT remote administration",
+    "Helpdesk remote support"
+  ]
+}
+,
+{
+  "technique_id": "T1071",
+  "name": "Application Layer Protocol",
+  "tactic": "Command and Control",
+  "keywords": ["http", "https", "dns", "beacon"],
+  "detection": [
+    "Detect suspicious outbound traffic patterns",
+    "Monitor unusual DNS or HTTP request behavior"
+  ],
+  "false_positives": [
+    "Software updates",
+    "Cloud service communications"
+  ]
+}
+
+
+]
+
